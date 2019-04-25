@@ -1,0 +1,19 @@
+{
+  "name": "final-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Quinn McPhail <quinnmcphail@me.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.3"
+  },
+  "scripts": {
+    "prettier": "prettier --write --no-config './app/**/*.js'",
+    "start": "node app/app.js"
+  },
+  "devDependencies": {
+    "prettier": "^1.17.0"
+  }
+}
