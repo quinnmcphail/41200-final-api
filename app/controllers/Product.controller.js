@@ -123,3 +123,99 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findAllCategories = (req, res) => {
+  Product.aggregate([
+    {
+      '$project': {
+        'Category': 1
+      }
+    }, {
+      '$group': {
+        '_id': '$Category'
+      }
+    }, {
+      '$group': {
+        '_id': '1',
+        'categories': {
+          '$addToSet': '$_id'
+        }
+      }
+    }, {
+      '$project': {
+        '_id': 0
+      }
+    }
+  ]).then(categories => {
+    res.send(categories[0]);
+  })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while getting the Categories."
+      });
+    });
+};
+
+exports.findAllSubcategories = (req, res) => {
+  Product.aggregate([
+    {
+      '$project': {
+        'SubCategory': 1
+      }
+    }, {
+      '$group': {
+        '_id': '$SubCategory'
+      }
+    }, {
+      '$group': {
+        '_id': '1',
+        'subcategories': {
+          '$addToSet': '$_id'
+        }
+      }
+    }, {
+      '$project': {
+        '_id': 0
+      }
+    }
+  ]).then(subcategories => {
+    res.send(subcategories[0]);
+  })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while getting the Subcategories."
+      });
+    });
+}
+
+exports.findProductsByCategory = (req, res) => {
+  Product.where('Category').equals(req.params.categoryName).then((products) => {
+    res.send(products);
+  }).catch(err => {
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        message: "Products not found with category " + req.params.categoryName
+      });
+    }
+    return res.status(500).send({
+      message: "Error gettings products with category " + req.params.categoryName
+    });
+  });
+}
+
+exports.findProductsBySubcategory = (req, res) => {
+  Product.where('SubCategory').equals(req.params.subCategoryName).then((products) => {
+    res.send(products);
+  }).catch(err => {
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        message: "Products not found with subcategory " + req.params.subCategoryName
+      });
+    }
+    return res.status(500).send({
+      message: "Error gettings products with subcategory " + req.params.subCategoryName
+    });
+  });
+}
