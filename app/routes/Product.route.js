@@ -7,5 +7,6 @@ module.exports = app => {
   app.get("/products/subcategories/", products.findAllSubcategories);
   app.get("/products/subcategories/:subCategoryName", products.findProductsBySubcategory);
   app.get("/products/:productId", products.findOne);
+  // app.put("/products/:productId", products.update);
   // app.delete("/products/:productId", products.delete);
 };
