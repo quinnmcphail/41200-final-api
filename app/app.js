@@ -29,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/Product.route.js")(app);
+require("./routes/List.route.js")(app);
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is listening on port 3000");
 });
