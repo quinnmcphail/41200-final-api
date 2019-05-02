@@ -219,3 +219,41 @@ exports.findProductsBySubcategory = (req, res) => {
     });
   });
 }
+
+exports.findSubcategoriesByCategory = (req, res) => {
+  Product.aggregate([
+    {
+      '$match': {
+        'Category': req.params.categoryName
+      }
+    },
+    {
+      '$project': {
+        'SubCategory': 1
+      }
+    }, {
+      '$group': {
+        '_id': '$SubCategory'
+      }
+    }, {
+      '$group': {
+        '_id': '1',
+        'subcategories': {
+          '$addToSet': '$_id'
+        }
+      }
+    }, {
+      '$project': {
+        '_id': 0
+      }
+    }
+  ]).then(subcategories => {
+    res.send(subcategories[0]);
+  })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while getting the Subcategories."
+      });
+    });
+}
