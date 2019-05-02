@@ -30,7 +30,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Product.find()
+  Product.find().limit(50)
     .then(products => {
       res.send(products);
     })
@@ -191,7 +191,7 @@ exports.findAllSubcategories = (req, res) => {
 }
 
 exports.findProductsByCategory = (req, res) => {
-  Product.where('Category').equals(req.params.categoryName).then((products) => {
+  Product.where('Category').equals(req.params.categoryName).limit(50).then((products) => {
     res.send(products);
   }).catch(err => {
     if (err.kind === "ObjectId") {
@@ -206,7 +206,7 @@ exports.findProductsByCategory = (req, res) => {
 }
 
 exports.findProductsBySubcategory = (req, res) => {
-  Product.where('SubCategory').equals(req.params.subCategoryName).then((products) => {
+  Product.where('SubCategory').equals(req.params.subCategoryName).limit(50).then((products) => {
     res.send(products);
   }).catch(err => {
     if (err.kind === "ObjectId") {
