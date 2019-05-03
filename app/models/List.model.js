@@ -6,12 +6,11 @@ const ListSchema = mongoose.Schema(
     {
         uuid: String,
         stores: [{
-                place_id:{
-                    name: String,
-                    products: [
-                        ProductSchema
-                    ]
-                }
+                name: String,
+                place_id: String,
+                products: [
+                    ProductSchema
+                ]
             }
         ],
     },
