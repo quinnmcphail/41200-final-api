@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
+app.options('*', cors());
 
 app.get("/", (req, res) => {
   res.json({ message: "GroceryList API" });
