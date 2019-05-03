@@ -5,13 +5,14 @@ const ProductSchema = mongoose.model("Product").schema;
 const ListSchema = mongoose.Schema(
     {
         uuid: String,
-        stores: [{
-            name: String,
-            place_id: String,
-            products: [
-                ProductSchema
-            ]
-        }],
+        stores: {
+            place_id:{
+                name: String,
+                products: [
+                    ProductSchema
+                ]
+            }
+        },
     },
     {
         timestamps: true
